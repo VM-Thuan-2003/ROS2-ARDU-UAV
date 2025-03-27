@@ -54,14 +54,15 @@ class SipeedTOF_MSA010_Publisher : public rclcpp::Node {
     }
     // cout << s << endl;
     cJSON *cparms = cJSON_ParseWithLength((const char *)s.c_str(), s.length());
+    uint32_t tmp;
     uvf_parms[0] =
-        ((float)(cJSON_GetObjectItem(cparms, "fx")->valueint) / 262144.0f);
+        ((float)((cJSON_GetObjectItem(cparms, "fx")->valueint) / 262144.0f));
     uvf_parms[1] =
-        ((float)(cJSON_GetObjectItem(cparms, "fy")->valueint) / 262144.0f);
+        ((float)((cJSON_GetObjectItem(cparms, "fy")->valueint) / 262144.0f));
     uvf_parms[2] =
-        ((float)(cJSON_GetObjectItem(cparms, "u0")->valueint) / 262144.0f);
+        ((float)((cJSON_GetObjectItem(cparms, "u0")->valueint) / 262144.0f));
     uvf_parms[3] =
-        ((float)(cJSON_GetObjectItem(cparms, "v0")->valueint) / 262144.0f);
+        ((float)((cJSON_GetObjectItem(cparms, "v0")->valueint) / 262144.0f));
     std::cout << "fx: " << uvf_parms[0] << std::endl;
     std::cout << "fy: " << uvf_parms[1] << std::endl;
     std::cout << "u0: " << uvf_parms[2] << std::endl;
@@ -159,8 +160,8 @@ class SipeedTOF_MSA010_Publisher : public rclcpp::Node {
     pcmsg.data.resize((pcmsg.height) * (pcmsg.width) * (pcmsg.point_step),
                       0x00);
     uint8_t *ptr = pcmsg.data.data();
-    for (size_t j = 0; j < pcmsg.height; j++)
-      for (size_t i = 0; i < pcmsg.width; i++) {
+    for (int j = 0; j < pcmsg.height; j++)
+      for (int i = 0; i < pcmsg.width; i++) {
         float cx = (((float)i) - u0) / fox;
         float cy = (((float)j) - v0) / foy;
         float dst = ((float)depth[j * (pcmsg.width) + i]) / 1000;
