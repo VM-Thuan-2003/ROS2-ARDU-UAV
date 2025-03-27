@@ -19,6 +19,7 @@ setup(
     entry_points={
         'console_scripts': [
             'vehicle_status = ardupilot.vehicle_status:main',
+            'main = ardupilot.main:main',
         ],
     },
 )

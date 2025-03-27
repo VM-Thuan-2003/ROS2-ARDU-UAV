@@ -54,7 +54,7 @@ from pymavlink import mavutil, mavwp
 from pymavlink.dialects.v10 import ardupilotmega
 
 from dronekit.util import ErrprinterHandler
-
+from dronekit.common import Convert
 
 class APIException(Exception):
     """
@@ -86,12 +86,16 @@ class Attitude(object):
     :param pitch: Pitch in radians
     :param yaw: Yaw in radians
     :param roll: Roll in radians
+
+    :param out pitch in degrees
+    :param out roll in degrees
+    :param out yaw in degrees
     """
 
     def __init__(self, pitch, yaw, roll):
-        self.pitch = pitch
-        self.yaw = yaw
-        self.roll = roll
+        self.pitch = Convert.radian2degree(pitch)
+        self.yaw = Convert.radian2degree(yaw)
+        self.roll = Convert.radian2degree(roll)
 
     def __str__(self):
         fmt = '{}:pitch={pitch},yaw={yaw},roll={roll}'
